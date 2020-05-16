@@ -4,6 +4,7 @@ const app = express();
 const morgan  = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -29,6 +30,7 @@ const myMiddleware = (req, res, next) => {
 //middleware
 app.use(morgan('dev'));
 app.use(myMiddleware);
+app.use(expressValidator());
 app.use(bodyParser.json());
 
 
