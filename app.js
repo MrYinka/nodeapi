@@ -4,6 +4,7 @@ const app = express();
 const morgan  = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -20,21 +21,18 @@ mongoose.connection.on("error", err  => {
 
 //bringing in routes
 const postRoutes = require('./routes/posts');
+const authRoutes = require('./routes/auth');
 
-const myMiddleware = (req, res, next) => {
-    console.log("Middleware Applied");
-    next();
-};
+
 
 
 //middleware
 app.use(morgan('dev'));
-app.use(myMiddleware);
 app.use(expressValidator());
 app.use(bodyParser.json());
-
-
+app.use(cookieParser());
 app.use('/', postRoutes);
+app.use('/', authRoutes);
 
 const port = process.env.PORT || 8080;
 
